@@ -1,0 +1,16 @@
+---
+applications:
+- name: joke-service
+  memory: 512M
+  instances: 1
+  host: joke-service-${random-word}
+#  host: joke-service
+  #domain: cfapps.io
+  domain: localhost
+  path: target/joke-service.jar
+  services:
+    - config-service
+  env:
+    SPRING_PROFILES_ACTIVE: cloud
+    DEBUG: "true"
+    debug: "true"
