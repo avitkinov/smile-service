@@ -15,6 +15,9 @@
  */
 package bg.vitkinov.edu.utils;
 
+/**
+ * @author Asparuh Vitkinov
+ */
 public enum GraphicsType {
 	
 	PNG("image/png"), GIF("image/gif"), JPG("image/jepg");

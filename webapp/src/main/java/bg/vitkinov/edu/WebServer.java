@@ -23,6 +23,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * @author Asparuh Vitkinov
+ */
 @SpringBootApplication
 @EnableZuulProxy
 @EnableEurekaClient

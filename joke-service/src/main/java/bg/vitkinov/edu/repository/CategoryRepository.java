@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package bg.vitkinov.edu;
+package bg.vitkinov.edu.repository;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import bg.vitkinov.edu.model.Category;
 
 /**
  * @author Asparuh Vitkinov
  */
-@SpringBootApplication
-@EnableEurekaServer
-public class EurekaServer {
-
-	public static void main(String[] args) {
-		SpringApplication.run(EurekaServer.class, args);
-	}
+@Repository
+public interface CategoryRepository extends CrudRepository<Category, Long> {
+	
+	@EntityGraph(value = "Category.keyWords", type = EntityGraphType.LOAD)
+	Optional<Category> findByName(String name);
 }

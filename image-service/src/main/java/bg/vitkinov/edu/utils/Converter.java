@@ -15,6 +15,9 @@
  */
 package bg.vitkinov.edu.utils;
 
+/**
+ * @author Asparuh Vitkinov
+ */
 public interface Converter<F, T> {
 
 	T convert(F value);

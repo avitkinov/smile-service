@@ -13,20 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package bg.vitkinov.edu;
+package bg.vitkinov.edu.model;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * @author Asparuh Vitkinov
  */
-@SpringBootApplication
-@EnableEurekaServer
-public class EurekaServer {
+@Entity
+public class KeyWord {
 
-	public static void main(String[] args) {
-		SpringApplication.run(EurekaServer.class, args);
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+	private Long id;
+	@Column(unique = true, nullable = false)
+	private String name;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

@@ -19,6 +19,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 
+/**
+ * @author Asparuh Vitkinov
+ */
 public class GraphicsProperites {
 
 	private Font font = new Font("Arial", Font.PLAIN, 14);

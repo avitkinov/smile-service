@@ -15,6 +15,9 @@
  */
 package bg.vitkinov.edu.utils;
 
+/**
+ * @author Asparuh Vitkinov
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -24,6 +27,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
@@ -62,7 +66,7 @@ public class TextToGraphicsConverter implements Converter<String, BufferedImage>
         
         for (int i = 0; i < lines.length;) {
         	String line = lines[i];
-        	int y =  ++i *  fm.getHeight()/*getAscent()*/;
+        	int y =  ++i *  fm.getAscent();
         	g2d.drawLine(0, y, (int) textBounds.getWidth(), y);
 			g2d.drawString(line, 0, y);
 		}
@@ -81,12 +85,12 @@ public class TextToGraphicsConverter implements Converter<String, BufferedImage>
         int lineHeight = 0;
         for (String line : lines) {
        		width = Math.max(width, fm.stringWidth(line));
-        	lineHeight = Math.max(lineHeight, fm.getHeight());
+        	lineHeight += fm.getHeight();
 		}
-        int height = lines.length * fm.getHeight();
+//        int height = lines.length * fm.getHeight();
         g2d.dispose();
         
-		return new Rectangle(width, height);
+		return new Rectangle(width + 2, lineHeight);
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -94,7 +98,7 @@ public class TextToGraphicsConverter implements Converter<String, BufferedImage>
 		properites2.setBackColor(Color.YELLOW);
 		properites2.setFont(new Font("Arial", Font.PLAIN, 30));
 		TextToGraphicsConverter converter = new TextToGraphicsConverter(properites2);
-		BufferedImage convert = converter.convert("dDXтadaada\ndasdasdasd");
+		BufferedImage convert = converter.convert(new String(Base64.getDecoder().decode("0JDRgdC/0LDRgNGD0YUg0Lgg0J3QtdCy0Lg=")));
 
 		File outputfile = new File("image.png");
 		ImageIO.write(convert, "png", outputfile);
