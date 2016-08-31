@@ -15,6 +15,8 @@
  */
 package bg.vitkinov.edu.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import bg.vitkinov.edu.model.Category;
+import bg.vitkinov.edu.model.KeyWord;
 import bg.vitkinov.edu.repository.CategoryRepository;
+import bg.vitkinov.edu.repository.KeyWordRepository;
 
 /**
  * @author Asparuh Vitkinov
@@ -37,7 +42,9 @@ import bg.vitkinov.edu.repository.CategoryRepository;
 public class JokeCategoryService {
 
 	@Autowired
-	CategoryRepository repository;
+	private CategoryRepository repository;
+	@Autowired
+	private KeyWordRepository keyWordRepository;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCategory(@PathVariable Long id) {
@@ -52,4 +59,30 @@ public class JokeCategoryService {
         return category.isPresent() ? new ResponseEntity<>(category.get(), HttpStatus.OK) :
         		new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }	
+	
+	@RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
+	public ResponseEntity<?> insert(@RequestParam String name, @RequestParam String keywords) {
+		Optional<Category> category = repository.findByName(name);
+		if (category.isPresent()) {
+			return new ResponseEntity<>(category.get(), HttpStatus.CONFLICT);
+		}
+		Category newCateogry = new Category();
+		newCateogry.setName(name);
+		newCateogry.setKeyWords(getKewWors(keywords));
+		return new ResponseEntity<>(repository.save(newCateogry), HttpStatus.CREATED);
+	}
+
+	private List<KeyWord> getKewWors(String keywords) {
+		String[] words = keywords.split(",");
+		List<KeyWord> result = new ArrayList<>(words.length);
+		for (String word : words) {
+			Optional<KeyWord> keyword = keyWordRepository.findByName(word);
+			if (keyword.isPresent()) {
+				result.add(keyword.get());
+			} else {
+				result.add(keyWordRepository.save(new KeyWord(word)));
+			}
+		}
+		return result;
+	}
 }

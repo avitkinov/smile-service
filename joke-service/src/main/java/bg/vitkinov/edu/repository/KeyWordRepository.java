@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package bg.vitkinov.edu;
+package bg.vitkinov.edu.repository;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import java.util.Optional;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import bg.vitkinov.edu.model.KeyWord;
 
 /**
  * @author Asparuh Vitkinov
  */
-@SpringBootApplication
-@EnableEurekaClient
-public class ImageServer {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ImageServer.class, args);
-	}
+@Repository
+public interface KeyWordRepository extends CrudRepository<KeyWord, Long> {
+	
+	Optional<KeyWord> findByName(String name);
 }

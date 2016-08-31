@@ -30,9 +30,9 @@ public class Joke {
 	private Long id;
 	@Column(unique = true, nullable = false)
 	private String title;
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false, columnDefinition="TEXT")
 	private String content;
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Category> categories;
 	
 	public Long getId() {

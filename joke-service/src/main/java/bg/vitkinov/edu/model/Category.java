@@ -24,9 +24,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
 
 /**
  * @author Asparuh Vitkinov
@@ -50,7 +50,7 @@ public class Category {
 	private Long id;
 	@Column(unique = true, nullable = false)
 	private String name;
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<KeyWord> keyWords;
 
 	public Long getId() {
