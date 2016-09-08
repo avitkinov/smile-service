@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import bg.vitkinov.edu.model.Service;
 import bg.vitkinov.edu.utils.Converter;
 import bg.vitkinov.edu.utils.GraphicsProperites;
 import bg.vitkinov.edu.utils.GraphicsType;
@@ -46,7 +47,12 @@ public class ImageService {
 	
 	private Logger logger = Logger.getLogger(getClass().getName());
 
-	@RequestMapping(value = "/", method = {RequestMethod.POST}, produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE})
+	@RequestMapping(method = RequestMethod.GET, produces= { MediaType.APPLICATION_JSON_VALUE } )
+    public Service getClichedMessage() {
+    	return new Service(this.getClass().getSimpleName(), "ready");
+    }
+	
+	@RequestMapping(value = "/img", method = {RequestMethod.POST}, produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
 	public byte[] convertToInlineTextImage(@RequestHeader(value="Accept") String acceptType,
 										   @RequestParam String text,
 										   @RequestParam(required = false, defaultValue = "false") String base64,
